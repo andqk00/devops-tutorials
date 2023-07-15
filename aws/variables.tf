@@ -4,12 +4,18 @@ variable "instance_name" {
   default     = "ExampleAppServerInstance"
 }
 
-variable "AWS_ACCESS_KEY_ID" {
-  description = "AWS Access Key ID"
-  type = string
+variable "instance_type" {
+  description = "Value of the type for the EC2 instance"
+  type        = string
+  default     = "t2.micro"
 }
 
-variable "AWS_SECRET_ACCESS_KEY" {
-  description = "AWS Secret Access Key"
-  type = string
-}
+# variable "AWS_ACCESS_KEY_ID" {
+#   description = "AWS Access Key ID"
+#   type        = string
+# }
+
+# variable "AWS_SECRET_ACCESS_KEY" {
+#   description = "AWS Secret Access Key"
+#   type        = string
+# }
