@@ -5,6 +5,8 @@
 !.gitignore
 !*.tf
 !*.auto.tfvars
+!*.yaml
+!.terraform.lock.hcl
 
 # ...even if they are in subdirectories
 !*/
