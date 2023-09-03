@@ -1,13 +1,14 @@
-# Ignore everything
-*
+# # Ignore everything
+# *
 
-# But not these files...
-!.gitignore
-!*.tf
-!*.auto.tfvars
-!*.yaml
-!.terraform.lock.hcl
-!*.sh
+# # But not these files...
+# !.gitignore
+# !*.tf
+# !*.auto.tfvars
+# !*.yaml
+# !.terraform.lock.hcl
+# !*.sh
+# !/bash/*
 
-# ...even if they are in subdirectories
-!*/
+# # ...even if they are in subdirectories
+# !*/
