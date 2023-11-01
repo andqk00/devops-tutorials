@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-sth
+spec:
+  rules:
+    - host: sth.another.com 
+      http:
+        paths:
+          - path: /wear
+            backend:
+              service: 
+                name: sth-service
+                port: 
+                  number: 80
+            pathType: Prefix
+          - path: /watch
+            backend:
+              service: 
+                name: else-service
+                port: 
+                  number: 80
+            pathType: Prefix

@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: some-policy
+spec:
+  podSelector:
+    matchLabels:
+      someLabel: someValue
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              somePodLabel: somePodValue
+          namespaceSelector:
+        # - namespaceSelector:
+            matchLabels:
+              namespaceLabel: value # need to set label to namespace first
+        - ipBlock:
+            cidr: 192.168.1.1/32
+      ports:
+        - protocol: TCP
+          port: 3306 # that Pod's port
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              somePodLabel: somePodValue
+          namespaceSelector:
+        # - namespaceSelector:
+            matchLabels:
+              namespaceLabel: value # need to set label to namespace first
+        - ipBlock:
+            cidr: 192.168.1.1/32
+      ports:
+        - protocol: TCP
+          port: 80 # that Pod's port

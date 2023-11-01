@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  labels:
+    app: myapp
+    tier: anything
+spec:
+  # securityContext:
+  #   runAsUser: 1000
+  containers:
+    - name: nginx
+      image: nginx
+      # securityContext:
+      #   runAsUser: 1000
+      #   capabilities: 
+      #     add: ["MAC_ADMIN"]
+  # serviceAccountName: something
+      volumeMounts:
+        - mountPath: /log
+          name: pv-example
+  volumes:
+    - name: pv-example
+      persistentVolumeClaim:
+        claimName: pvc-example
+    # - name: data-volume
+    #   hostPath:
+    #     path: /data
+    #     type: Directory

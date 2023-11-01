@@ -1,0 +1,29 @@
+## Use a combination of taints, tolerations and nodeAffinity 
+## So that nodes will only accept pods with specific tolerations
+## And pods will only be scheduled on the specific nodes
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx
+  tolerations: # kubectl taint nodes node01 key=value:tain-effect (NoSchedule | PreferNoSchedule | NoExecute)
+    - key: “ ”
+      operator: “Equal”
+      value: “ ”
+      effect: "NoSchedule"
+  nodeSelector: # kubectl label nodes node01 key=value
+    size: Large
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution: # preferredDuringSchedulingIgnoredDuringExecution, requiredDuringSchedulingRequiredDuringExecution
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: size
+              operator: In # Exists
+              values:
+                - Large
+                - Medium
+
