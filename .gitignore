@@ -9,6 +9,9 @@
 # !.terraform.lock.hcl
 # !*.sh
 # !/bash/*
+**/.terraform
+**/terraform.tfstate
+**/terraform.tfstate.backup
 
 # # ...even if they are in subdirectories
 # !*/
