@@ -36,3 +36,19 @@ kubectl create service nodeport nginx --tcp=80:80 --node-port=30080 --dry-run=cl
 
 - Create command won't use pod's labels as selectors.
 - Expose command can't pass in node port.
+
+### View Certificates
+
+```
+openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text -noout
+```
+
+### KubeConfig
+
+```
+# View kubeconfig file (add --kubeconfig=custom-file to specify a custom kubeconfig file)
+kubectl config view
+
+# Update current context
+kubectl config use-context <user>@<cluster>
+```

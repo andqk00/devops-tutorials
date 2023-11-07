@@ -53,3 +53,98 @@ openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
 ```
 
 > Do these steps for other clients such as Scheduler, Controller-Manager, etc.
+
+<b>3. ETCD Servers</b>
+
+> Following HA best practice, etcd servers might be deployed to multiple clusters. Which is why we need to also create a peer cert and add it as an option in `etcd.yaml`.
+
+![](./images/etcd-server-cert.png)
+
+<b>4. Kube API Server</b>
+
+> Since `kube-apiserver` is known by many names, it is required to register all the names into the cert.
+
+``` openssl.cnf
+[req]
+req_extensions = v3_req
+distinguished_name = req_distinguished_name
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation,
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = kubernetes
+DNS.2 = kubernetes.default
+DNS.3 = kubernetes.default.svc
+DNS.4 = kubernetes.default.svc.cluster.local
+IP.1 = 10.96.0.1
+IP.2 = 172.17.0.87
+```
+
+```
+# Generate Keys
+openssl genrsa -out apiserver.key 2048
+
+# Certificate Singing Request
+openssl req -new -key apiserver.key -subj "/CN=kube-apiserver" -out apiserver.csr -config openssl.cnf
+
+# Sign Certificates
+openssl x509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -out apiserver.crt
+```
+
+![](./images/kube-apiserver-cert-options.png)
+
+<b>5. Kubectl Nodes</b>
+
+> For `kubelet` server cert, we generate cert for each node with the name of the cert set to the name of node. Then we add the cert to `kubelet-config.yaml`.
+
+``` kubelet-config.yaml
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+authentication:
+  x509:
+    clientCAFile: "/var/lib/kubernetes/ca.pem"
+authorization:
+  mode: Webhook
+clusterDomain: "cluster.local"
+clusterDNS: 
+  - "10.32.0.10"
+podCIDR: "${POD_CIDR}"
+resolvConf: "/run/systemd/resolve/resolv.conf"
+runtimeRequestTimeout: "15m"
+tlsCertFile: "/var/lib/kubelet/kubelet-node01.crt"
+tlsPrivateKeyFile: "/var/lib/kubelet/kublete-node01.key"
+```
+
+![](./images/kubelet-client-cert.png)
+
+### Certificates API
+
+![](./images/cert-api.png)
+
+``` someone-csr.yaml
+apiVersion: certificates.k8s.io/v1beta1
+kind: CertificateSigningRequest
+metadata:
+  name: andqk
+spec:
+  groups:
+    - system:authenticated
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
+  request:
+    <base64-encoded-csr>
+```
+
+```
+# View requests
+kubectl get csr
+
+# Sign requests
+kubectl certificate approve jane
+
+# View request in YAML
+kubectl get csr andqk -o yaml
+```
