@@ -4,3 +4,4 @@
 |---------|------|
 | etcd | 2379 |
 | kube-apiserver | 6443 |
+| kubectl proxy | 8001|
