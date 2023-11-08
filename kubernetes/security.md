@@ -64,7 +64,7 @@ openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
 
 > Since `kube-apiserver` is known by many names, it is required to register all the names into the cert.
 
-``` openssl.cnf
+```openssl.cnf
 [req]
 req_extensions = v3_req
 distinguished_name = req_distinguished_name
@@ -147,4 +147,18 @@ kubectl certificate approve jane
 
 # View request in YAML
 kubectl get csr andqk -o yaml
+```
+
+## Service Accounts
+
+When create a service account, it will generate a token stored in a secret and mount it the the service account. This token will be used as an authentication `Bearer` token when making REST API call.
+
+For cases when 3rd party apps is deployed inside K8s, the service account token can be mounted directly to the 3rd party app as a volume to be used.
+
+Each ns has its own service account `default`. When a pod is created, this service account is automatically mounted to that pod.
+
+> Since `v1.24`, K8s no longer create service account with a secret token but it has to be done manually. If you want a no expire token, you need to create a secret like below.
+
+```
+
 ```

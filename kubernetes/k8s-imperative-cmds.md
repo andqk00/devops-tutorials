@@ -52,3 +52,13 @@ kubectl config view
 # Update current context
 kubectl config use-context <user>@<cluster>
 ```
+
+### Check Access of Users
+
+```
+kubectl auth can-i create deployments
+
+kubectl auth can-i delete nodes --as dev-user # For admin only
+
+kubectl auth can-i update pods -n sth
+```

@@ -3,6 +3,7 @@ kind: RoleBinding
 # kind: ClusterRoleBinding
 metadata:
   name: devuser-dev-role-binding
+  # namespace: sth
 subjects:
   - kind: User
     name: devuser

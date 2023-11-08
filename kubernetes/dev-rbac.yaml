@@ -3,6 +3,7 @@ kind: Role
 # kind: ClusterRole
 metadata:
   name: developer
+  # namespace: sth
 rules:
   - apiGroups:
       - ""
