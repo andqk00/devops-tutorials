@@ -28,7 +28,7 @@
 
 <b>1. Generate CA</b>
 
-```
+```sh
 # Generate Keys
 openssl genrsa -out ca.key 2048
 
@@ -41,7 +41,7 @@ openssl x509 -req -in ca.csr -signkey ca.key -out ca.crt
 
 <b>2. Admin User and other clients</b>
 
-```
+```sh
 # Generate Keys
 openssl genrsa -out admin.key 2048
 
@@ -64,7 +64,7 @@ openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
 
 > Since `kube-apiserver` is known by many names, it is required to register all the names into the cert.
 
-```python {id="python-print" class="blue large" data-filename="openssl.cnf"}
+```conf title="openssl.cnf"
 [req]
 req_extensions = v3_req
 distinguished_name = req_distinguished_name
@@ -81,7 +81,7 @@ IP.1 = 10.96.0.1
 IP.2 = 172.17.0.87
 ```
 
-```
+```sh
 # Generate Keys
 openssl genrsa -out apiserver.key 2048
 
@@ -98,7 +98,7 @@ openssl x509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -out apiserver.crt
 
 > For `kubelet` server cert, we generate cert for each node with the name of the cert set to the name of node. Then we add the cert to `kubelet-config.yaml`.
 
-``` kubelet-config.yaml
+```yaml title="kubelet-config.yaml"
 kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1
 authentication:
@@ -122,7 +122,7 @@ tlsPrivateKeyFile: "/var/lib/kubelet/kublete-node01.key"
 
 ![](./images/cert-api.png)
 
-``` someone-csr.yaml
+```yaml title="someone-csr.yaml"
 apiVersion: certificates.k8s.io/v1beta1
 kind: CertificateSigningRequest
 metadata:
@@ -159,6 +159,12 @@ Each ns has its own service account `default`. When a pod is created, this servi
 
 > Since `v1.24`, K8s no longer create service account with a secret token but it has to be done manually. If you want a no expire token, you need to create a secret like below.
 
-```
-
+```yaml
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: mysecret
+  annotations:
+    kubernetes.io/service-account.name: dashboard-sa
 ```
