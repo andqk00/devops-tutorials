@@ -64,8 +64,7 @@ openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
 
 > Since `kube-apiserver` is known by many names, it is required to register all the names into the cert.
 
-<p class="codeblock-label">openssl.cnf</p>
-```markdown
+```python {id="python-print" class="blue large" data-filename="openssl.cnf"}
 [req]
 req_extensions = v3_req
 distinguished_name = req_distinguished_name
