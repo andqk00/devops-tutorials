@@ -28,3 +28,7 @@ spec:
     #   hostPath:
     #     path: /data
     #     type: Directory
+    # - name: data-volume
+    #   awsElasticBlockStore:
+    #     volumeID: sthsth
+    #     fsType: ext4
