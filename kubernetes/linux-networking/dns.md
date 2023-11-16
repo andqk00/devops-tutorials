@@ -6,7 +6,7 @@
 
 > Update file `/etc/hosts` to set name for an IP. This name can then be used for several commands like `ping` or `ssh`.
 
-> Update file `/etc/resolv.conf` with a value `nameserver 192.168.1.100` to specify the DNS server. In a network with multiple hosts, the DNS server is responsible to be a centralized server that stores all DNS values.
+> Update file `/etc/resolv.conf` with a value `nameserver 192.168.1.100` to specify the DNS server. In a network with multiple hosts, the DNS server is responsible to be a centralized server that stores all DNS values. All the name and IP can then be specified at the DNS server for multiple hosts to reference it.
 
 > In file `/etc/nsswitch.conf`, there is a line `hosts: files dns` which define the order of hostname files in which the host will read when trying to reach a server.
 
