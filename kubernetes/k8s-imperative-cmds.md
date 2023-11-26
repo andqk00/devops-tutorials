@@ -62,3 +62,22 @@ kubectl auth can-i delete nodes --as dev-user # For admin only
 
 kubectl auth can-i update pods -n sth
 ```
+
+### Kube System Services
+
+```sh
+# Use crictl to get a service
+crictl ps | grep ...
+
+# Use crictl to check log
+crictl logs <process-id/hash>
+
+# Check kube-proxy is creating iptables rules
+ssh <node> iptables-save | grep <service-name>
+```
+
+### Certificates Details
+
+```sh
+openssl x509  -noout -text -in /etc/kubernetes/pki/etcd/server.crt
+```
