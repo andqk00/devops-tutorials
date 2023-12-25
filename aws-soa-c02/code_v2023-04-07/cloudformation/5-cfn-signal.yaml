@@ -50,7 +50,7 @@ Resources:
   SampleWaitCondition:
     CreationPolicy:
       ResourceSignal:
-        Timeout: PT2M
+        Timeout: PT5M
         Count: 1
     Type: AWS::CloudFormation::WaitCondition
 
