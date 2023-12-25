@@ -12,6 +12,8 @@
 **/.terraform
 **/terraform.tfstate
 **/terraform.tfstate.backup
+**/jenkins_home/
+**/db_data/
 
 # # ...even if they are in subdirectories
 # !*/
