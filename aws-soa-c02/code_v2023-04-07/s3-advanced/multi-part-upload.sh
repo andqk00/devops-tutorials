@@ -13,7 +13,7 @@ split -b 35m 100MB.txt 100MB_part_
 aws s3api create-multipart-upload --bucket $BUCKET_NAME --key 100MB.txt
 
 # get back the upload_id and insert it below
-UPLOAD_ID=LO99SQpq7LSDaMiArIV0SWCUlc3fyCBXflTX8yfae8Ux62y2nkceBXProyeV54kN4SIajjOZvE7x8btrohRLXpJKcu0vQd7oomr2ATVu8iTC.lFc4nPDLvwZVpFMoqL9AXiXuQPYANbIw8jT.7q42A--
+UPLOAD_ID=0v5.EC94xfE4tU9FVuss6k_CHVIcCT90H1EqKgPGLX_J.0B8AuYFAPiXg4hJpC6d71jSonSLPwU2p8RXYLJ.SJbhcoM9AB8SLDT8tmguzmWn.B8Idu.aRIdbZjjDxspvsoLtXNIMz24PjkvgIuPflw--
 
 # list existing multi part uploads
 aws s3api list-multipart-uploads --bucket $BUCKET_NAME
@@ -29,4 +29,4 @@ aws s3api upload-part --bucket $BUCKET_NAME --key 100MB.txt --part-number 3 --bo
 aws s3api list-parts --upload-id $UPLOAD_ID --bucket $BUCKET_NAME --key 100MB.txt
 
 # Complete multi-part upload
-aws s3api complete-multipart-upload --bucket $BUCKET_NAME --key 100MB.txt --upload-id $UPLOAD_ID --multipart-upload "{\"Parts\":[{\"ETag\":\"etag1\",\"PartNumber\":1},{\"ETag\":\"etag2\",\"PartNumber\":2},{\"ETag\":\"etag3\",\"PartNumber\":3}]}"
+aws s3api complete-multipart-upload --bucket $BUCKET_NAME --key 100MB.txt --upload-id $UPLOAD_ID --multipart-upload "{\"Parts\":[{\"ETag\":\"cdbd372cb84b1720b94c30cc95d5c4cf\",\"PartNumber\":1},{\"ETag\":\"cdbd372cb84b1720b94c30cc95d5c4cf\",\"PartNumber\":2},{\"ETag\":\"53d2747cf38ca67cfb9c165d90ff896f\",\"PartNumber\":3}]}"
