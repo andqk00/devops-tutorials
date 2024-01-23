@@ -4,6 +4,7 @@ import { Construct } from "constructs";
 
 export class PhotosStack extends cdk.Stack {
   private stackSuffix: string;
+  public readonly photosBucketArn: string;
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
@@ -13,6 +14,13 @@ export class PhotosStack extends cdk.Stack {
     const photosBucket = new Bucket(this, "photos-bucket-andqk", {
       bucketName: `photos-bucket-andqk-${this.stackSuffix}`,
     });
+    this.photosBucketArn = photosBucket.bucketArn;
+
+    // new cdk.CfnOutput(this, "photos-bucket-arn", {
+    //   value: photosBucket.bucketArn,
+    //   exportName: "photos-bucket-arn",
+    // });
+
     // (photosBucket.node.defaultChild as CfnBucket).overrideLogicalId(
     //   "photos-bucket-andqk"
     // );
