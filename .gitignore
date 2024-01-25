@@ -84,7 +84,7 @@
 **/Procfile
 **/Rakefile
 **/spec/*
-**/test/*
+# **/test/*
 
 # SCM #
 #######
