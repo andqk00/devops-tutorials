@@ -1,4 +1,4 @@
-import { Stack, StackProps } from "aws-cdk-lib";
+import { RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
 import { AttributeType, ITable, Table } from "aws-cdk-lib/aws-dynamodb";
 import { Construct } from "constructs";
 import { getPrefixFromStack } from "../utils";
@@ -17,6 +17,7 @@ export class DataStack extends Stack {
         type: AttributeType.STRING,
       },
       tableName: `spaces-table-${prefix}`,
+      removalPolicy: RemovalPolicy.DESTROY,
     });
   }
 }

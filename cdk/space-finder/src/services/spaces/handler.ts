@@ -20,7 +20,7 @@ async function handler(
         message = "Hello from GET!";
         break;
       case "POST":
-        const response = postSpaces(event, dynamoDbClient);
+        const response = await postSpaces(event, dynamoDbClient);
         return response;
       default:
         break;

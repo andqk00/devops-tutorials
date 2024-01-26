@@ -14,7 +14,7 @@ export async function postSpaces(
       TableName: process.env.TABLE_NAME,
       Item: {
         id: {
-          S: item.id,
+          S: randomId,
         },
         location: {
           S: item.location,
