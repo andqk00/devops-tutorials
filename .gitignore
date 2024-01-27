@@ -132,5 +132,10 @@
 **/.vagrant
 **/Vagrantfile
 
+# CDK #
+###########
+**/node_modules
+**/cdk.out
+
 # # ...even if they are in subdirectories
 # !*/
