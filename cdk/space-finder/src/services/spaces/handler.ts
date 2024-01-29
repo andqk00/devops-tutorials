@@ -6,6 +6,8 @@ import {
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { postSpaces } from "./post-spaces";
 import { getSpaces } from "./get-spaces";
+import { updateSpaces } from "./update-spaces";
+import { deleteSpaces } from "./delete-spaces";
 
 const dynamoDbClient = new DynamoDBClient({ region: "ap-southeast-1" });
 
@@ -23,6 +25,12 @@ async function handler(
       case "POST":
         const postResponse = await postSpaces(event, dynamoDbClient);
         return postResponse;
+      case "PUT":
+        const putResponse = await updateSpaces(event, dynamoDbClient);
+        return putResponse;
+      case "DELETE":
+        const delResponse = await deleteSpaces(event, dynamoDbClient);
+        return delResponse;
       default:
         break;
     }
