@@ -26,7 +26,6 @@ export async function getSpaces(
 
       if (getItemResponse.Item) {
         const unmarshallItem = unmarshall(getItemResponse.Item);
-        console.log(unmarshallItem);
         return {
           statusCode: 200,
           body: JSON.stringify(unmarshallItem),
@@ -51,7 +50,6 @@ export async function getSpaces(
     })
   );
   const unmarshallItem = result.Items?.map((item) => unmarshall(item));
-  console.log(unmarshallItem);
 
   return {
     statusCode: 201,

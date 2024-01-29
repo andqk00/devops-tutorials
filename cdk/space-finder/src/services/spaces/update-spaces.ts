@@ -1,5 +1,6 @@
 import { DynamoDBClient, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { parseJson } from "../shared/utils";
 
 export async function updateSpaces(
   event: APIGatewayProxyEvent,
@@ -8,7 +9,7 @@ export async function updateSpaces(
   if (event.queryStringParameters) {
     if ("id" in event.queryStringParameters && event.body) {
       const spaceId = event.queryStringParameters["id"];
-      const parseBody = JSON.parse(event.body);
+      const parseBody = parseJson(event.body);
       const requestBodyKey = Object.keys(parseBody)[0];
       const requestBodyValue = parseBody[requestBodyKey];
 
@@ -32,7 +33,6 @@ export async function updateSpaces(
           ReturnValues: "UPDATED_NEW",
         })
       );
-      console.log(updateResult.Attributes);
 
       return {
         statusCode: 204,

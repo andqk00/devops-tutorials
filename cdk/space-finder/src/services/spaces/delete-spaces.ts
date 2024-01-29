@@ -19,7 +19,6 @@ export async function deleteSpaces(
           },
         })
       );
-      console.log(deleteResult);
 
       return {
         statusCode: 200,

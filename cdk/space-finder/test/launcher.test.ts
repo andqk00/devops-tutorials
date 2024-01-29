@@ -11,16 +11,16 @@ process.env.TABLE_NAME = "spaces-table-fe4bdef0";
 //     },
 //   } as any,
 //   {} as any
-// );
-// handler(
-//   {
-//     httpMethod: "POST",
-//     body: JSON.stringify({
-//       location: "Vomir",
-//     }),
-//   } as any,
-//   {} as any
-// );
+// ).then((result) => console.log(result));
+handler(
+  {
+    httpMethod: "POST",
+    body: JSON.stringify({
+      location: "Midgard",
+    }),
+  } as any,
+  {} as any
+).then((result) => console.log(result));
 // handler(
 //   {
 //     httpMethod: "PUT",
@@ -32,13 +32,13 @@ process.env.TABLE_NAME = "spaces-table-fe4bdef0";
 //     }),
 //   } as any,
 //   {} as any
-// );
-handler(
-  {
-    httpMethod: "DELETE",
-    queryStringParameters: {
-      id: "ed9fd54c-c6ce-4f75-90c3-fe1a637a3668",
-    },
-  } as any,
-  {} as any
-);
+// ).then((result) => console.log(result));
+// handler(
+//   {
+//     httpMethod: "DELETE",
+//     queryStringParameters: {
+//       id: "ed9fd54c-c6ce-4f75-90c3-fe1a637a3668",
+//     },
+//   } as any,
+//   {} as any
+// ).then((result) => console.log(result));
