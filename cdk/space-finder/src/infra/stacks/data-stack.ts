@@ -11,7 +11,7 @@ export class DataStack extends Stack {
 
     const prefix = getPrefixFromStack(this);
 
-    this.spacesTable = new Table(this, "spaces-table", {
+    this.spacesTable = new Table(this, "SpacesTable", {
       partitionKey: {
         name: "id",
         type: AttributeType.STRING,

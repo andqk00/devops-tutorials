@@ -1,0 +1,21 @@
+{
+  "DataStack": {
+    "ExportsOutputRefSpacesTable8A9973559FB4B87D": "spaces-table-962f8570",
+    "ExportsOutputFnGetAttSpacesTable8A997355Arn242927FE": "arn:aws:dynamodb:ap-southeast-1:462628053520:table/spaces-table-962f8570"
+  },
+  "AuthStack": {
+    "SpacesIdentityPoolId": "ap-southeast-1:e2a82633-e97f-48ad-a8be-736510065c36",
+    "ExportsOutputFnGetAttSpacesUserPool5D732F45ArnC2F0FFA7": "arn:aws:cognito-idp:ap-southeast-1:462628053520:userpool/ap-southeast-1_HuHbsXLz3",
+    "SpacesUserPoolClientId": "2ag2p3c9gm1sn1tosh54gehr0u",
+    "SpacesUserPoolId": "ap-southeast-1_HuHbsXLz3"
+  },
+  "LambdaStack": {
+    "ExportsOutputFnGetAttSpacesLambdaA5F923A4ArnE59FF2BB": "arn:aws:lambda:ap-southeast-1:462628053520:function:LambdaStack-SpacesLambdaA5F923A4-TAemkWW7xzhq"
+  },
+  "UiDeploymentStack": {
+    "SpacesFinderUrl": "d2n24vr5dyrne2.cloudfront.net"
+  },
+  "ApiStack": {
+    "SpacesApiEndpoint36C4F3B6": "https://sk97v8sz05.execute-api.ap-southeast-1.amazonaws.com/prod/"
+  }
+}

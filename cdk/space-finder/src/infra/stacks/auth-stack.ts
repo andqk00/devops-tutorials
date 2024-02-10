@@ -34,7 +34,7 @@ export class AuthStack extends Stack {
   }
 
   private createUserPool() {
-    this.userPool = new UserPool(this, "space-user-pool", {
+    this.userPool = new UserPool(this, "SpacesUserPool", {
       selfSignUpEnabled: true,
       signInAliases: {
         username: true,
@@ -42,13 +42,13 @@ export class AuthStack extends Stack {
       },
     });
 
-    new CfnOutput(this, "space-user-pool-id", {
+    new CfnOutput(this, "SpacesUserPoolId", {
       value: this.userPool.userPoolId,
     });
   }
 
   private createUserPoolClient() {
-    this.userPoolClient = this.userPool.addClient("space-user-pool-client", {
+    this.userPoolClient = this.userPool.addClient("SpacesUserPoolClient", {
       authFlows: {
         adminUserPassword: true,
         custom: true,
@@ -57,13 +57,13 @@ export class AuthStack extends Stack {
       },
     });
 
-    new CfnOutput(this, "space-user-pool-client-id", {
+    new CfnOutput(this, "SpacesUserPoolClientId", {
       value: this.userPoolClient.userPoolClientId,
     });
   }
 
   private createAdminGroup() {
-    new CfnUserPoolGroup(this, "space-admins", {
+    new CfnUserPoolGroup(this, "SpacesAdmins", {
       userPoolId: this.userPool.userPoolId,
       groupName: "admins",
       roleArn: this.adminRole.roleArn,
@@ -71,7 +71,7 @@ export class AuthStack extends Stack {
   }
 
   private createIdentityPool() {
-    this.identityPool = new CfnIdentityPool(this, "space-identity-pool", {
+    this.identityPool = new CfnIdentityPool(this, "SpacesIdentityPool", {
       allowUnauthenticatedIdentities: true,
       cognitoIdentityProviders: [
         {
@@ -81,33 +81,29 @@ export class AuthStack extends Stack {
       ],
     });
 
-    new CfnOutput(this, "space-identity-pool-id", {
+    new CfnOutput(this, "SpacesIdentityPoolId", {
       value: this.identityPool.ref,
     });
   }
 
   private createRoles() {
-    this.authenticatedRole = new Role(
-      this,
-      "cognito-default-authenticated-role",
-      {
-        assumedBy: new FederatedPrincipal(
-          "cognito-identity.amazonaws.com",
-          {
-            StringEquals: {
-              "cognito-identity.amazonaws.com:aud": this.identityPool.ref,
-            },
-            "ForAnyValue:StringLike": {
-              "cognito-identity.amazonaws.com:amr": "authenticated",
-            },
+    this.authenticatedRole = new Role(this, "CognitoDefaultAuthenticatedRole", {
+      assumedBy: new FederatedPrincipal(
+        "cognito-identity.amazonaws.com",
+        {
+          StringEquals: {
+            "cognito-identity.amazonaws.com:aud": this.identityPool.ref,
           },
-          "sts:AssumeRoleWithWebIdentity"
-        ),
-      }
-    );
+          "ForAnyValue:StringLike": {
+            "cognito-identity.amazonaws.com:amr": "authenticated",
+          },
+        },
+        "sts:AssumeRoleWithWebIdentity"
+      ),
+    });
     this.unauthenticatedRole = new Role(
       this,
-      "cognito-default-unauthenticated-role",
+      "CognitoDefaultUnauthenticatedRole",
       {
         assumedBy: new FederatedPrincipal(
           "cognito-identity.amazonaws.com",
@@ -123,7 +119,7 @@ export class AuthStack extends Stack {
         ),
       }
     );
-    this.adminRole = new Role(this, "cognito-admin-role", {
+    this.adminRole = new Role(this, "CognitoAdminRole", {
       assumedBy: new FederatedPrincipal(
         "cognito-identity.amazonaws.com",
         {
@@ -147,7 +143,7 @@ export class AuthStack extends Stack {
   }
 
   private attachRoles() {
-    new CfnIdentityPoolRoleAttachment(this, "roles-attachment", {
+    new CfnIdentityPoolRoleAttachment(this, "RolesAttachment", {
       identityPoolId: this.identityPool.ref,
       roles: {
         authenticated: this.authenticatedRole.roleArn,
