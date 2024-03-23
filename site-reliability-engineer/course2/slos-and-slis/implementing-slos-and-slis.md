@@ -3,12 +3,12 @@
 ## Selecting metrics to use for SLIs
 
 - Many times, many metrics can be found under /metrics on a server
-    - Ex: node_network_receive_bytes_total: the total amount of network traffic the node has received.
+  - Ex: node_network_receive_bytes_total: the total amount of network traffic the node has received.
 - Documentation or browsing in Prometheus to search for available metrics for your application or server.
 - Metrics typically indicate:
-    - Time - e.g. how long a transaction takes
-    - Totals - e.g. how many requests a website had
-    - Throughput - e.g. how many requests a site received per second
+  - Time - e.g. how long a transaction takes
+  - Totals - e.g. how many requests a website had
+  - Throughput - e.g. how many requests a site received per second
 
 Prometheus is an industry-standard tool for collecting and querying metrics. Prometheus collects and displays what is known as **time-series data**, meaning data along a timeline. It uses what is known as **PromQL** query language.
 
@@ -64,13 +64,13 @@ A useful display of the error budget is the percentage of the **remaining** erro
 Take a look at some formulas below:
 
 - `% error occurred = 1 - compliance = 1 - successful requests/total requests`
-    - Ex: there are 100 requests total and 97 are successful. So the % error occurred is 1 - 97/100 = 0.03 = 3%.
+  - Ex: there are 100 requests total and 97 are successful. So the % error occurred is 1 - 97/100 = 0.03 = 3%.
 - `error budget = 1 - availability`
-    - Ex: availability is 90%, so the error budget is 10%.
+  - Ex: availability is 90%, so the error budget is 10%.
 - `% error used = % error occurred/error budget`
-    - Ex: there are 3% error requests and the error budget is 10%. 3%/10% = 0.3 = 30%, so 30% of the error budget is used.
+  - Ex: there are 3% error requests and the error budget is 10%. 3%/10% = 0.3 = 30%, so 30% of the error budget is used.
 - `% remaining error budget = 1- % error used`
-    - Ex: 30% of the error budget is used, meaning 1 - 30% = 70% of the error budget is remaining.
+  - Ex: 30% of the error budget is used, meaning 1 - 30% = 70% of the error budget is remaining.
 
 We can bring these formulas together to form this query for error budget:
 
@@ -83,3 +83,39 @@ We can bring these formulas together to form this query for error budget:
 `sum(increase(http_request_total{job="webserver"}[7d])) by (verb))` is the total number of requests. Notice the lack of the `200` code for all requests.
 
 `(1 - .90)` is the actual error budget percentage.
+
+## Demo
+
+Example queries:
+
+```
+rate(node_cpu_seconds_total{mode="system"}[1m])
+```
+
+This query gets the CPU usage in seconds for the Prometheus server itself.
+
+```
+histogram_quantile(0.95, sum by(le)(rate(prometheus_http_request_duration_seconds_bucket[5m])))
+```
+
+This query gets the 95th percentile of latency requests to the Prometheus server over the last 5 minutes.
+
+Here we provided you some more queries. Try them yourself!
+
+```
+prometheus_http_requests_total{code=~"2.*", job="prometheus"}
+```
+
+This query looks at the number of successful HTTP requests for the Prometheus server where the job label is Prometheus.
+
+```
+rate(prometheus_http_requests_total{code=~"2.*", job="prometheus"}[30m])
+```
+
+Similar query as above, but this time we're using rate to get the rate (think requests per second) of the HTTP requests for the last 30 minutes.
+
+```
+node_scrape_collector_duration_seconds[2m]
+```
+
+This gives us the scrape collection duration (basically how long it takes Prometheus to get data from a target) for the last 2 minutes.
