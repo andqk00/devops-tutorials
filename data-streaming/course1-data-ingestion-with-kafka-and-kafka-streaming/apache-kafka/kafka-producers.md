@@ -34,12 +34,12 @@ Finally, never change the type of serialization in use without recreating the to
 - The `retries` setting determines how many times the producer will attempt to send a message before marking it as failed
 - If ordering guarantees are important to your application and you’ve also enabled retries, make sure that you set `enable.idempotence` to true
 - Producers may choose to compress messages with the `compression.type` setting
-    - Options are `none`, `gzip`, `lz4`, `snappy`, and `zstd`
-    - Compression is performed by the producer client if enabled
-    - If the topic has its own compression setting, it must match the producer setting, otherwise the broker will decompress and recompress the message into its configured format.
-    - The `acks` setting determines how many In-Sync Replica (ISR) Brokers need to have successfully received the message from the client before moving on
-    - A setting of `-1` or `all` means that all ISRs will have successfully received the message before the producer proceeds
-    - Clients may opt to set this to 0 for performance reasons
+  - Options are `none`, `gzip`, `lz4`, `snappy`, and `zstd`
+  - Compression is performed by the producer client if enabled
+  - If the topic has its own compression setting, it must match the producer setting, otherwise the broker will decompress and recompress the message into its configured format.
+  - The `acks` setting determines how many In-Sync Replica (ISR) Brokers need to have successfully received the message from the client before moving on
+  - A setting of `-1` or `all` means that all ISRs will have successfully received the message before the producer proceeds
+  - Clients may opt to set this to 0 for performance reasons
 - The diagram below illustrates how the topic and producer may have different compression settings. However, the setting at the topic level will always be what the consumer sees.
 
 ![image](images/different-compression.png)
@@ -50,12 +50,12 @@ See this [Cloudflare Blog Post](https://blog.cloudflare.com/squeezing-the-fireho
 
 Here is a quick survey of the compression types and their characteristics:
 
-| Algorithm | Pros | Cons |
-| --------- | ---- | ---- |
-| lz4 | fast compression and decompression | not a high compression ratio |
-| snappy | fast compression and decompression | not a high compression ratio |
-| zstd | high compression ratio | not as fast as lz4 or snappy |
-| gzip | ubiquitous, widely-supported | cpu-intensive, significantly slower than lz4 or snappy |
+| Algorithm | Pros                               | Cons                                                   |
+| --------- | ---------------------------------- | ------------------------------------------------------ |
+| lz4       | fast compression and decompression | not a high compression ratio                           |
+| snappy    | fast compression and decompression | not a high compression ratio                           |
+| zstd      | high compression ratio             | not as fast as lz4 or snappy                           |
+| gzip      | ubiquitous, widely-supported       | cpu-intensive, significantly slower than lz4 or snappy |
 
 ## Batching Configuration
 

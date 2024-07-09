@@ -12,7 +12,6 @@ The most important metric to understand for your Kafka Consumer is **consumer la
 
 If you notice that the consumer lag number continues to grow over time, though, that is an indicator that your consumer cannot keep up. In that case, you typically will need additional consumer processes in order to keep up.
 
-
 Another important metric to measure is the number of messages per second passing through your Kafka topic.
 
 - This number indicates the throughput of your topic
