@@ -66,3 +66,19 @@ Most common connector categories:
 - You can start, stop, and restart Connectors via the API
 - The choice of a REST API provides a wide-array of integration and management opportunities
 - [Official REST API Documentation](https://docs.confluent.io/platform/current/connect/references/restapi.html)
+
+## Kafka Connect Connectors - Optional Further Research
+
+- [Confluent Connector Hub](https://www.confluent.io/hub/?_ga=2.42557541.1345547963.1563205519-78292278.1561645529)
+- [List of core Connectors included with most distributions](https://docs.confluent.io/platform/current/connect/kafka_connectors.html)
+- [Connect REST API Documentation](https://docs.confluent.io/platform/current/connect/references/restapi.html)
+
+## Kafka Connect Troubleshooting Tips
+
+As demonstrated in the demo video above, if you run into trouble with Kafka Connect in the workspace exercise below, or during your project, here are some tips to help your debugging:
+
+First, use the REST API to check the connector status. `curl http:<connect_url>/connectors/<your_connector>/status` to see what the status of your connector is
+Next, use the REST API to check the task status for the connector. `curl http:<connect_url>/connectors/<your_connector>/tasks/<task_id>/status` to see what the status of your task is
+If you can’t deduce the failure from these two options, the next best bet is to examine the logs of Kafka Connect. Typically, a tool like `tail` or `less` is useful in examining the logs for Kafka Connect. On Linux systems, Kafka Connect logs are often available in `/var/log/kafka/`. Kafka Connect is often verbose and will indicate what the issue is that it is experiencing.
+
+If you are familiar with Java Management Extensions (JMX) and have access to the server, you may also opt to inspect its JMX metrics for information on failures. However, JMX is most useful for automated monitoring, so you likely will not receive any additional insights from using JMX vs the API or the logs.
