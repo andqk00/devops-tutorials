@@ -13,7 +13,7 @@ from models.producer import Producer
 
 logger = logging.getLogger(__name__)
 
-topic_name = "udacity.datastreaming.course1.weather"
+topic_name = "org.chicago.cta.weather.v1"
 
 class Weather(Producer):
     """Defines a simulated weather model"""

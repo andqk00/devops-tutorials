@@ -38,7 +38,7 @@ class Turnstile(Producer):
         #
         #
         super().__init__(
-            "udacity.datastreaming.course1.turnstile", # TODO: Come up with a better topic name
+            "org.chicago.cta.turnstile", # TODO: Come up with a better topic name
             key_schema=Turnstile.key_schema,
             value_schema=Turnstile.value_schema, # TODO: Uncomment once schema is defined
             num_partitions=1,
@@ -58,15 +58,15 @@ class Turnstile(Producer):
         #
         for _ in range(num_entries):
             self.producer.produce(
-            topic=self.topic_name,
-            key={"timestamp": self.time_millis()},
-            value={
-                "station_id": self.station.station_id,
-                "station_name": self.station.name.lower()
-                        .replace("/", "_and_")
-                        .replace(" ", "_")
-                        .replace("-", "_")
-                        .replace("'", ""),
-                "line": self.station.color.name
-            },
+                topic=self.topic_name,
+                key={"timestamp": self.time_millis()},
+                value={
+                    "station_id": self.station.station_id,
+                    "station_name": self.station.name.lower()
+                            .replace("/", "_and_")
+                            .replace(" ", "_")
+                            .replace("-", "_")
+                            .replace("'", ""),
+                    "line": self.station.color.name
+                },
             )

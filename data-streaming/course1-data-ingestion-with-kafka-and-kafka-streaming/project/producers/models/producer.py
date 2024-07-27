@@ -51,7 +51,11 @@ class Producer:
             Producer.existing_topics.add(self.topic_name)
 
         # TODO: Configure the AvroProducer
-        self.producer = AvroProducer(self.broker_properties)
+        self.producer = AvroProducer(
+            self.broker_properties,
+            default_key_schema=self.key_schema,
+            default_value_schema=self.value_schema    
+        )
 
     def create_topic(self):
         """Creates the producer topic if it does not already exist"""
@@ -61,8 +65,18 @@ class Producer:
         # the Kafka Broker.
         #
         #
-        admin_client = AdminClient(self.broker_properties)
-        admin_client.create_topics(NewTopic("udacity.datastreaming.course1.producer", 1, 1))
+        admin_client = AdminClient({
+            "bootstrap.servers": self.broker_properties["bootstrap.servers"]
+        })
+        list_topics = admin_client.list_topics(timeout=5)
+        if self.topic_name not in list_topics:
+            admin_client.create_topics([
+                NewTopic(
+                    topic=self.topic_name,
+                    num_partitions=self.num_partitions,
+                    replication_factor=self.num_replicas
+                )
+            ])
 
     def time_millis(self):
         return int(round(time.time() * 1000))

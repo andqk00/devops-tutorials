@@ -27,7 +27,7 @@ CREATE TABLE turnstile (
     station_name VARCHAR,
     line VARCHAR
 ) WITH (
-    KAFKA_TOPIC = 'udacity.datastreaming.course1.turnstile',
+    KAFKA_TOPIC = 'org.chicago.cta.turnstile',
     VALUE_FORMAT = 'AVRO',
     KEY='station_id'
 );
